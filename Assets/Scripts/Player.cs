@@ -28,10 +28,15 @@ public class Player : MonoBehaviour {
         }
         if (Input.GetKeyDown(KeyCode.Space) && canJump)
         {
+			r.velocity = new Vector3(r.velocity.x, 0, r.velocity.z);
             r.AddForce(Vector3.up * 300);
             canJump = false;
         }
-    }
+		if (this.transform.position.y <=-10)
+		{
+			Application.LoadLevel("Main");
+		}
+	}
 
     //enter the collider of a UFO
     void OnTriggerEnter(Collider o)
@@ -47,7 +52,7 @@ public class Player : MonoBehaviour {
     {
         if (o.tag == "UFO")
         {
-            //canJump = false;
+            canJump = false;
         }
     }
 }
