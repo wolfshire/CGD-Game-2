@@ -5,12 +5,14 @@ public class Player : MonoBehaviour {
 
     Rigidbody r;
     bool canJump;
+    public GameObject cam;
 
     [SerializeField]
     int speed = 10;
 
 	// Use this for initialization
 	void Start () {
+        cam.SetActive(true);
         r = GetComponent<Rigidbody>();
         canJump = true;
 	}
@@ -34,7 +36,7 @@ public class Player : MonoBehaviour {
         }
 		if (this.transform.position.y <=-10)
 		{
-			Application.LoadLevel("Main");
+            transform.position = new Vector3(0, 0, 0);
 		}
 	}
 
