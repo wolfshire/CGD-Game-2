@@ -31,7 +31,7 @@ public class Player : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Space) && canJump)
         {
 			r.velocity = new Vector3(r.velocity.x, 0, r.velocity.z);
-            r.AddForce(Vector3.up * 300);
+			r.AddForce(Vector3.up * 300 * JumpMultiplier);
             canJump = false;
         }
 		if (this.transform.position.y <=-10)
@@ -57,4 +57,15 @@ public class Player : MonoBehaviour {
             canJump = false;
         }
     }
+
+	private float JumpMultiplier { 
+		get {
+			float mul = 1;
+			PowerJump[] jumps = GetComponents<PowerJump> ();
+			foreach (PowerJump j in jumps) {
+				mul *= j.JumpMultiplier;
+			}
+			return mul;
+		}
+	}
 }
