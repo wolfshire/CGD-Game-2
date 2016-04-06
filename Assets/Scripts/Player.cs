@@ -5,14 +5,13 @@ public class Player : MonoBehaviour {
 
     Rigidbody r;
     bool canJump;
-    public GameObject cam;
+	bool inTrigger;
 
     [SerializeField]
     int speed = 10;
 
 	// Use this for initialization
 	void Start () {
-        cam.SetActive(true);
         r = GetComponent<Rigidbody>();
         canJump = true;
 	}
@@ -34,18 +33,23 @@ public class Player : MonoBehaviour {
 			r.AddForce(Vector3.up * 300 * JumpMultiplier);
             canJump = false;
         }
+		if(r.velocity.y < 0 && !inTrigger)
+		{
+			canJump = false;
+		}
 		if (this.transform.position.y <=-10)
 		{
-            transform.position = new Vector3(0, 0, 0);
+			transform.position = new Vector3(0, 0, 2.96f);
 		}
 	}
 
     //enter the collider of a UFO
-    void OnTriggerEnter(Collider o)
+    void OnTriggerEnter(Collider o) 
     {
-        if(o.tag == "UFO")
+		if(o.tag == "UFO" || o.tag == "Spawner")
         {
             canJump = true;
+			inTrigger = true;
         }
     }
 
@@ -54,7 +58,7 @@ public class Player : MonoBehaviour {
     {
         if (o.tag == "UFO")
         {
-            canJump = false;
+			inTrigger = false;
         }
     }
 
