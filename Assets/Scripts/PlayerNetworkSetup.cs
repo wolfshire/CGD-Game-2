@@ -14,7 +14,7 @@ public class PlayerNetworkSetup : NetworkBehaviour {
             //disable the main camera
             GameObject.Find("SceneCamera").SetActive(false);
             //enable the player script which will enable the player camera
-            GetComponent<Player>().enabled = true;
+            //GetComponent<Player>().enabled = true;
         }
 	}
 }

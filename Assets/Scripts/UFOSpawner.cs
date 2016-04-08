@@ -13,6 +13,7 @@ public class UFOSpawner : MonoBehaviour {
 	private float startingFrequency;
 	[SerializeField]
 	private float frequencyPercentChange;
+	[SerializeField]
 	private float currentFrequency;
 
 	[SerializeField]

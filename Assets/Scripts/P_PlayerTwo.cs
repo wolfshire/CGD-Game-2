@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerTwo : MonoBehaviour {
+public class P_PlayerTwo : MonoBehaviour {
 	
 	Rigidbody r;
 	bool canJump;
