@@ -39,7 +39,7 @@ public class P_PlayerTwo : MonoBehaviour {
 		}
 		if (this.transform.position.y <=-10)
 		{
-			transform.position = new Vector3(0, 0, 2.96f);
+			transform.position = new Vector3(0, 0, 0f);
 		}
 	}
 	
