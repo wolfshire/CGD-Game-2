@@ -5,6 +5,7 @@ public class Player : MonoBehaviour {
 
     Rigidbody r;
     bool canJump;
+	int jumpsLeft = 0;
     public GameObject cam;
 
     [SerializeField]
@@ -22,17 +23,18 @@ public class Player : MonoBehaviour {
         //controls
         if (Input.GetKey(KeyCode.A))
         {
-            transform.Translate(Vector3.left * Time.deltaTime * speed);
+			transform.Translate(Vector3.left * Time.deltaTime * speed * SpeedMultiplier);
         }
         if (Input.GetKey(KeyCode.D))
         {
-            transform.Translate(Vector3.right * Time.deltaTime * speed);
+			transform.Translate(Vector3.right * Time.deltaTime * speed * SpeedMultiplier);
         }
-        if (Input.GetKeyDown(KeyCode.Space) && canJump)
+		if (Input.GetKeyDown(KeyCode.Space) && (canJump || jumpsLeft > 0))
         {
 			r.velocity = new Vector3(r.velocity.x, 0, r.velocity.z);
 			r.AddForce(Vector3.up * 300 * JumpMultiplier);
             canJump = false;
+			jumpsLeft--;
         }
 		if (this.transform.position.y <=-10)
 		{
@@ -45,7 +47,8 @@ public class Player : MonoBehaviour {
     {
         if(o.tag == "UFO")
         {
-            canJump = true;
+			jumpsLeft = Jumps;
+			canJump = true;
         }
     }
 
@@ -56,7 +59,7 @@ public class Player : MonoBehaviour {
         {
             canJump = false;
         }
-    }
+	}
 
 	private float JumpMultiplier { 
 		get {
@@ -66,6 +69,27 @@ public class Player : MonoBehaviour {
 				mul *= j.JumpMultiplier;
 			}
 			return mul;
+		}
+	}
+
+	private float SpeedMultiplier { 
+		get {
+			float mul = 1;
+			PowerSpeed[] speed = GetComponents<PowerSpeed> ();
+			foreach (PowerSpeed s in speed) {
+				mul *= s.SpeedMultiplier;
+			}
+			return mul;
+		}
+	}
+
+	private int Jumps { 
+		get {
+			int num = 0;
+			PowerDoubleJump[] jumps = GetComponents<PowerDoubleJump> ();
+			if (jumps.Length > 0)
+				num = jumps [0].NumberOfJumps;
+			return num;
 		}
 	}
 }

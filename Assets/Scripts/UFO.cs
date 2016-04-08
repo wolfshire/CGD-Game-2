@@ -9,6 +9,12 @@ public class UFO : MonoBehaviour {
 	[SerializeField]
 	private float speed;
 
+	[SerializeField]
+	private string layer;
+	private int ufoLayerMask;
+	[SerializeField]
+	private float collisionCheck = 5.0f;
+
 	private Power power;
 
 	void Start() {
@@ -16,8 +22,13 @@ public class UFO : MonoBehaviour {
 	}
 
 	public void Init (float speed, Vector3 direction) {
+		ufoLayerMask = LayerMask.NameToLayer (layer);
+
 		this.speed = speed;
 		this.direction = direction;
+
+		this.CheckCollision ();
+		this.gameObject.layer = ufoLayerMask;
 	}
 	
 	// Update is called once per frame
@@ -63,6 +74,12 @@ public class UFO : MonoBehaviour {
 
 		if (found != null) {
 			Destroy (found);
+		}
+	}
+
+	public void CheckCollision() {
+		if (Physics.CheckSphere (this.transform.position, collisionCheck, (int)Mathf.Pow(2, ufoLayerMask))) {
+			Destroy (this.gameObject);
 		}
 	}
 
